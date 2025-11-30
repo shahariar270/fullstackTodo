@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useEffect } from 'react';
-import { apiRoute } from './Ultis/helper';
+import { apiRoute, fetchApi } from './Ultis/helper';
 
 function App() {
   const [count, setMessage] = useState(null);
@@ -13,13 +13,7 @@ function App() {
 
 
   useEffect(() => {
-    fetch(`${apiRoute}/todos`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
+   fetchApi('todos')
   }, []);
 
   return (
