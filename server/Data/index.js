@@ -1,10 +1,26 @@
-const todos =[
-    {
-        id:1,
-        title: 'Do home Work',
-        date:'12 nov 2025',
-        isComplete: false,
-    }
-]
+import mongoose from "mongoose";
 
-module.exports = todos;
+
+const todoSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: true,
+    },
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        default: '',
+    },
+    isComplete: {
+        type: Boolean,
+        default: false
+    },
+},
+    {
+        timestamps: s
+    })
+
+module.exports = mongoose.model('Todos', todoSchema);
