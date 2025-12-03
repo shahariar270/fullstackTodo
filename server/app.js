@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+require('dotenv').config()
 const router = require('./router');
 const { default: mongoose } = require('mongoose');
 
@@ -22,5 +23,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log('server is ruing');
+    console.log('server is ruing', port);
 })

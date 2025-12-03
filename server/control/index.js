@@ -1,10 +1,15 @@
-let todos = require("../Data")
+const Todos =require('../Data/index')
 
-exports.getTodos = (req, res) => {
+exports.getTodos =async (req, res) => {
+   try {
+    const data = await Todos.find();
     res.status(200).json({
-        message: 'Get all todo Data',
-        data: todos,
+        massage: 'data is fetch successfully',
+        data:data
     })
+   } catch (error) {
+    console.log(error);
+   }
 }
 
 exports.createTodos = (req, res) => {
