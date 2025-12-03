@@ -16,10 +16,11 @@ exports.createTodos = (req, res) => {
     const newTodos = req.body;
     if (newTodos && newTodos.title) {
         todos = [newTodos, ...todos]
+        const todoId = Date.new();
 
         res.status(201).json({
             message: 'Todo Created Sussesfully',
-            data: todos,
+            data: {todoId , todoId},
         })
     } else {
         res.status(400).json({
