@@ -5,14 +5,15 @@ import { Field, Form, Formik } from 'formik'
 import axios from 'axios';
 
 function App() {
-  const [data ,  setData] = useState();
-  const handleOnSubmit =(values , {setSubmitting})=>{
-    axios.post(`${apiRoute}/todos`, values).then(()=>{}).finally()
+  const [data, setData] = useState([]);
+  const [edit, setEdit] = useState(null)
+  const handleOnSubmit = (values, { setSubmitting }) => {
+    axios.post(`${apiRoute}/todos`, values).then(() => { }).finally()
 
   }
 
   useEffect(() => {
-    fetchApi('todos').then((res)=>{
+    fetchApi('todos').then((res) => {
       setData(res.data)
     })
   }, []);
@@ -38,6 +39,18 @@ function App() {
         </Form>
 
       </Formik>
+      <ul>
+        {data.map((item, i) => (
+          <li
+            key={i}
+          >
+            {item.title}
+            <button onClick={() => {
+              setEdit(item)
+            }} >edit</button>
+          </li>
+        ))}
+      </ul>
 
     </>
   )
