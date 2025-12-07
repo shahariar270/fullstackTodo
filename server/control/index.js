@@ -1,33 +1,41 @@
-const Todos =require('../Data/index')
+const Todos = require('../Data/index')
 
-exports.getTodos =async (req, res) => {
-   try {
-    const data = await Todos.find();
-    res.status(200).json({
-        massage: 'data is fetch successfully',
-        data:data
-    })
-   } catch (error) {
-    console.log(error);
-   }
-}
-
-exports.createTodos = (req, res) => {
-    const newTodos = req.body;
-    if (newTodos && newTodos.title) {
-        todos = [newTodos, ...todos]
-        const todoId = Date.new();
-
-        res.status(201).json({
-            message: 'Todo Created Sussesfully',
-            data: {todoId , todoId},
+exports.getTodos = async (req, res) => {
+    try {
+        const data = await Todos.find();
+        res.status(200).json({
+            massage: 'data is fetch successfully',
+            data: data
         })
-    } else {
-        res.status(400).json({
-            message: 'Todo Not Created'
-        })
+    } catch (error) {
+        console.log(error);
     }
 }
+
+exports.createTodos = async (req, res) => {
+    try {
+        const newTodos = req.body;
+        const id = Date.now();
+
+        if (!newTodos || !newTodos.title) {
+            return res.status(400).json({ message: 'Todo Not Created' });
+        }
+
+        const created = await Todos.create({ id, ...newTodos });
+
+        res.status(201).json({
+            message: 'Todo Created Successfully',
+            data: created
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Server Error",
+            error: error.message
+        })
+    }
+};
+
 
 exports.deleteTodos = (req, res) => {
     const id = Number(req.params.id);

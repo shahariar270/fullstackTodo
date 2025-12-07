@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { useEffect } from 'react';
 import { apiRoute, fetchApi } from './Ultis/helper';
 import { Field, Form, Formik } from 'formik'
+import axios from 'axios';
 
 function App() {
   const handleOnSubmit =(values , {setSubmitting})=>{
-    
+    axios.post(`${apiRoute}/todos`, values).then(()=>{}).finally()
 
   }
 
@@ -32,6 +33,7 @@ function App() {
             name='title'
             placeholder='enter title'
           />
+          <button type='submit'>submit</button>
         </Form>
 
       </Formik>
