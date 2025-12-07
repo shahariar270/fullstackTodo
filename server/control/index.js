@@ -52,16 +52,19 @@ exports.deleteTodos = (req, res) => {
     })
 }
 
-exports.updateTodo = (req, res) => {
-    const id = Number(req.params.id);
+exports.updateTodo = async (req, res) => {
+    const id = req.params.id;
     const data = req.body;
 
-    const index = todos.findIndex((todo) => todo.id === id);
+    const updated = await Todos.findOneAndUpdate(
+        { id: id },
+        data,
+    );
 
-    todos[index] = { id, ...data }
 
     res.status(200).json({
         message: "Todo fully updated!",
-        data: todos
+        data: updated
     });
-}
+};
+

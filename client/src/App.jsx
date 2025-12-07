@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useEffect } from 'react';
-import { apiRoute, fetchApi } from './Ultis/helper';
+import { apiRoute, fetchApi, initialValuesData } from './Ultis/helper';
 import { Field, Form, Formik } from 'formik'
 import axios from 'axios';
 
@@ -8,7 +8,12 @@ function App() {
   const [data, setData] = useState([]);
   const [edit, setEdit] = useState(null)
   const handleOnSubmit = (values, { setSubmitting }) => {
-    axios.post(`${apiRoute}/todos`, values).then(() => { }).finally()
+    if (edit?.id) {
+      axios.put(`${apiRoute}/todos/${edit?.id}`, values)
+      setEdit(null)
+    } else {
+      axios.post(`${apiRoute}/todos`, values).then(() => { }).finally()
+    }
 
   }
 
@@ -22,11 +27,7 @@ function App() {
     <>
       <h3>todo app</h3>
       <Formik
-        initialValues={{
-          title: '',
-          description: '',
-          isCompleted: false,
-        }}
+        initialValues={initialValuesData(edit)}
         onSubmit={handleOnSubmit}
       >
         <Form>

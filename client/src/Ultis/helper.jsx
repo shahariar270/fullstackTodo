@@ -12,3 +12,13 @@ export const fetchApi = async (url) => {
         console.error("API Error:", error);
     }
 };
+export const initialValuesData = (data = {}) => {
+    if (data) {
+        return data;
+    }
+    return {
+        title: '',
+        description: '',
+        isCompleted: false,
+    }
+}
