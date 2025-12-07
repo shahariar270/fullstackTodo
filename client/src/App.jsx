@@ -3,11 +3,11 @@ import { useEffect } from 'react';
 import { apiRoute, fetchApi } from './Ultis/helper';
 
 function App() {
-  
+
 
 
   useEffect(() => {
-   fetchApi('todos')
+    fetchApi('todos')
   }, []);
 
   return (
