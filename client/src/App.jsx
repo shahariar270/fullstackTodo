@@ -17,6 +17,10 @@ function App() {
 
   }
 
+  const deleteHandle = (id) => {
+    axios.delete(`${apiRoute}/todos/${id}`) 
+
+  }
   useEffect(() => {
     fetchApi('todos').then((res) => {
       setData(res.data)
@@ -49,6 +53,9 @@ function App() {
             <button onClick={() => {
               setEdit(item)
             }} >edit</button>
+            <button onClick={() => {
+              deleteHandle(item.id)
+            }} >delete</button>
           </li>
         ))}
       </ul>

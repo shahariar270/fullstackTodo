@@ -37,10 +37,11 @@ exports.createTodos = async (req, res) => {
 };
 
 
-exports.deleteTodos = (req, res) => {
-    const id = Number(req.params.id);
+exports.deleteTodos = async(req, res) => {
+    const id = req.params.id;
 
     const todo = todos.filter(item => item.id !== id);
+     const deleted = await Todos.findOneAndDelete({ id: id });
 
     if (!todo) {
         return res.status(404).json({
@@ -49,6 +50,7 @@ exports.deleteTodos = (req, res) => {
     }
     res.status(200).json({
         message: 'Data Deleted Successfully',
+        deleted
     })
 }
 
