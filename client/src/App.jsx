@@ -5,15 +5,16 @@ import { Field, Form, Formik } from 'formik'
 import axios from 'axios';
 
 function App() {
+  const [data ,  setData] = useState();
   const handleOnSubmit =(values , {setSubmitting})=>{
     axios.post(`${apiRoute}/todos`, values).then(()=>{}).finally()
 
   }
 
-
-
   useEffect(() => {
-    fetchApi('todos')
+    fetchApi('todos').then((res)=>{
+      setData(res.data)
+    })
   }, []);
 
   return (
