@@ -37,20 +37,17 @@ exports.createTodos = async (req, res) => {
 };
 
 
-exports.deleteTodos = async(req, res) => {
+exports.deleteTodos = async (req, res) => {
     const id = req.params.id;
+    const deleted = await Todos.findOneAndDelete({ id: id });
 
-    const todo = todos.filter(item => item.id !== id);
-     const deleted = await Todos.findOneAndDelete({ id: id });
-
-    if (!todo) {
+    if (!deleted) {
         return res.status(404).json({
             message: 'No route Found'
         })
     }
     res.status(200).json({
         message: 'Data Deleted Successfully',
-        deleted
     })
 }
 
