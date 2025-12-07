@@ -6,70 +6,66 @@ import axios from 'axios';
 
 function App() {
   const [data, setData] = useState([]);
-  const [edit, setEdit] = useState(null)
-  const loadData = () => {
-    fetchApi('todos').then((res) => {
-      setData(res.data)
-    })
-  }
+  const [edit, setEdit] = useState(null);
 
-  const handleOnSubmit = (values, { setSubmitting }) => {
+  const loadData = async () => {
+    const res = await fetchApi('todos');
+    setData(res.data);
+  };
+
+  const handleOnSubmit = async (values, { resetForm }) => {
     if (edit?.id) {
-      axios.put(`${apiRoute}/todos/${edit?.id}`, values)
-      loadData()
-      setEdit(null)
+      await axios.put(`${apiRoute}/todos/${edit.id}`, values);
+      setEdit(null);
     } else {
-      axios.post(`${apiRoute}/todos`, values).then(() => {
-        loadData()
-      }).finally()
+      await axios.post(`${apiRoute}/todos`, values);
     }
 
-  }
+    await loadData();
+    resetForm();
+  };
 
-  const deleteHandle = (id) => {
-    axios.delete(`${apiRoute}/todos/${id}`)
-    loadData()
+  const deleteHandle = async (id) => {
+    await axios.delete(`${apiRoute}/todos/${id}`);
+    await loadData();
+  };
 
-  }
   useEffect(() => {
-    loadData()
+    loadData();
   }, []);
 
   return (
     <>
       <h3>todo app</h3>
+
       <Formik
+        enableReinitialize
         initialValues={initialValuesData(edit)}
         onSubmit={handleOnSubmit}
       >
         <Form>
           <Field
-            as='input'
-            name='title'
-            placeholder='enter title'
+            as="input"
+            name="title"
+            placeholder="enter title"
           />
-          <button type='submit'>submit</button>
+          <button type="submit">submit</button>
         </Form>
-
       </Formik>
+
       <ul>
-        {data.map((item, i) => (
-          <li
-            key={i}
-          >
+        {data.map((item) => (
+          <li key={item.id}>
             {item.title}
-            <button onClick={() => {
-              setEdit(item)
-            }} >edit</button>
-            <button onClick={() => {
-              deleteHandle(item.id)
-            }} >delete</button>
+
+            <button onClick={() => setEdit(item)}>edit</button>
+
+            <button onClick={() => deleteHandle(item.id)}>delete</button>
           </li>
         ))}
       </ul>
-
     </>
-  )
+  );
 }
 
-export default App
+export default App;
