@@ -79,6 +79,16 @@ function App() {
                 </label>
 
                 <div className="right">
+                  <input
+                    type="date"
+                    onChange={async (e) => {
+                      await axios.put(`${apiRoute}/todos/${item.id}`, {
+                        ...item,
+                        targetDate: e.target.value,
+                      });
+                      loadData();
+                    }}
+                  />
                   <button className="btn edit" onClick={() => setEdit(item)}>
                     Edit
                   </button>
