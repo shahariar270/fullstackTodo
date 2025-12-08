@@ -19,6 +19,14 @@ const todoSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    targetDate: {
+        type: String,
+        default: () => {
+            const date = new Date();
+            date.setDate(date.getDate() + 1);
+            return date.toISOString().split('T')[0]
+        },
+    }
 },
     {
         timestamps: true
