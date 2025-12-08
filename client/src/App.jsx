@@ -56,6 +56,17 @@ function App() {
       <ul>
         {data.map((item) => (
           <li key={item.id}>
+            <input
+              type="checkbox"
+              checked={item.isComplete}
+              onChange={async (e) => {
+                await axios.put(`${apiRoute}/todos/${item.id}`, {
+                  ...item,
+                  isComplete: e.target.checked
+                });
+                loadData();
+              }}
+            />
             {item.title}
 
             <button onClick={() => setEdit(item)}>edit</button>

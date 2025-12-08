@@ -58,6 +58,7 @@ exports.updateTodo = async (req, res) => {
     const updated = await Todos.findOneAndUpdate(
         { id: id },
         data,
+        { new: true, runValidators: true }
     );
 
 
