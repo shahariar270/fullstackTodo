@@ -34,49 +34,67 @@ function App() {
     loadData();
   }, []);
 
-  return (
-    <>
-      <h3>todo app</h3>
+    return (
+      <div className="todo-app">
+        <h2 className="header">Todo Manager</h2>
 
-      <Formik
-        enableReinitialize
-        initialValues={initialValuesData(edit)}
-        onSubmit={handleOnSubmit}
-      >
-        <Form>
-          <Field
-            as="input"
-            name="title"
-            placeholder="enter title"
-          />
-          <button type="submit">submit</button>
-        </Form>
-      </Formik>
+        <div className="card form-card">
+          <Formik
+            enableReinitialize
+            initialValues={initialValuesData(edit)}
+            onSubmit={handleOnSubmit}
+          >
+            <Form className="form">
+              <Field
+                name="title"
+                placeholder="What do you need to do?"
+                className="input"
+              />
+              <button type="submit" className="btn primary">
+                {edit ? "Update" : "Add"}
+              </button>
+            </Form>
+          </Formik>
+        </div>
 
-      <ul>
-        {data.map((item) => (
-          <li key={item.id}>
-            <input
-              type="checkbox"
-              checked={item.isComplete}
-              onChange={async (e) => {
-                await axios.put(`${apiRoute}/todos/${item.id}`, {
-                  ...item,
-                  isComplete: e.target.checked
-                });
-                loadData();
-              }}
-            />
-            {item.title}
+        <div className="card list-card">
+          <ul className="list">
+            {data.map((item) => (
+              <li key={item.id} className="list-item">
+                <label className="left">
+                  <input
+                    type="checkbox"
+                    checked={item.isComplete}
+                    onChange={async (e) => {
+                      await axios.put(`${apiRoute}/todos/${item.id}`, {
+                        ...item,
+                        isComplete: e.target.checked,
+                      });
+                      loadData();
+                    }}
+                  />
+                  <span className={item.isComplete ? "done" : ""}>
+                    {item.title}
+                  </span>
+                </label>
 
-            <button onClick={() => setEdit(item)}>edit</button>
-
-            <button onClick={() => deleteHandle(item.id)}>delete</button>
-          </li>
-        ))}
-      </ul>
-    </>
+                <div className="right">
+                  <button className="btn edit" onClick={() => setEdit(item)}>
+                    Edit
+                  </button>
+                  <button
+                    className="btn delete"
+                    onClick={() => deleteHandle(item.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
   );
-}
+  }
 
-export default App;
+  export default App;
