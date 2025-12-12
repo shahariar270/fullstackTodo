@@ -16,20 +16,24 @@ function App() {
 
   const handleOnSubmit = async (values, { resetForm }) => {
     setLoading(true)
-    if (edit?.id) {
-      const res = await axios.put(`${apiRoute}/todos/${edit.id}`, values);
-      setData((prev) =>
-        prev.map((item) =>
-          item.id === edit?.id ? res.data.data : item
-        ))
+    try {
+      if (edit?.id) {
+        const res = await axios.put(`${apiRoute}/todos/${edit.id}`, values);
+        setData((prev) =>
+          prev.map((item) =>
+            item.id === edit?.id ? res.data.data : item
+          ))
+        setEdit(null);
+      } else {
+        const res = await axios.post(`${apiRoute}/todos`, values);
+        setData((prev) => [res.data.data, ...prev]);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
       setLoading(false)
-      setEdit(null);
-    } else {
-      const res = await axios.post(`${apiRoute}/todos`, values);
-      setData((prev) => [res.data.data, ...prev]);
-      setLoading(false)
+      resetForm();
     }
-    resetForm();
   };
 
   const deleteHandle = async (id) => {
