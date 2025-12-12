@@ -72,55 +72,59 @@ function App() {
       <div className="card list-card">
         {loading ? <span>loading...</span> :
           <ul className="list">
-            {data.map((item) => (
-              <li key={item.id} className="list-item">
-                <label className="left">
-                  <input
-                    type="checkbox"
-                    checked={item.isComplete}
-                    onChange={async (e) => {
-                      setLoading(true);
-                      await axios.put(`${apiRoute}/todos/${item.id}`, {
-                        ...item,
-                        isComplete: e.target.checked,
-                      }).finally(() => {
-                        setLoading(false)
-                      })
-                    }}
-                  />
-                  <span className={item.isComplete ? "done" : ""}>
-                    {item.title}
-                  </span>
-                </label>
-                <div className="right">
-                  <input
-                    type="date"
-                    defaultValue={
-                      item.targetDate
-                        ? item.targetDate.slice(0, 10)
-                        : ""
-                    }
-                    onChange={async (e) => {
-                      await axios.put(`${apiRoute}/todos/${item.id}`, {
-                        ...item,
-                        targetDate: e.target.value,
-                      });
-                      loadData();
-                    }}
-                  />
+            {data?.length === 0 ? <span>you have no todo complete</span>
+              :
+              ( data.map((item) => (
+                  <li key={item.id} className="list-item">
+                    <label className="left">
+                      <input
+                        type="checkbox"
+                        checked={item.isComplete}
+                        onChange={async (e) => {
+                          setLoading(true);
+                          await axios.put(`${apiRoute}/todos/${item.id}`, {
+                            ...item,
+                            isComplete: e.target.checked,
+                          }).finally(() => {
+                            setLoading(false)
+                          })
+                        }}
+                      />
+                      <span className={item.isComplete ? "done" : ""}>
+                        {item.title}
+                      </span>
+                    </label>
+                    <div className="right">
+                      <input
+                        type="date"
+                        defaultValue={
+                          item.targetDate
+                            ? item.targetDate.slice(0, 10)
+                            : ""
+                        }
+                        onChange={async (e) => {
+                          await axios.put(`${apiRoute}/todos/${item.id}`, {
+                            ...item,
+                            targetDate: e.target.value,
+                          });
+                          loadData();
+                        }}
+                      />
 
-                  <button className="btn edit" onClick={() => setEdit(item)}>
-                    Edit
-                  </button>
-                  <button
-                    className="btn delete"
-                    onClick={() => deleteHandle(item.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
+                      <button className="btn edit" onClick={() => setEdit(item)}>
+                        Edit
+                      </button>
+                      <button
+                        className="btn delete"
+                        onClick={() => deleteHandle(item.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </li>
+                )))
+            }
+
           </ul>
         }
       </div>
