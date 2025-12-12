@@ -18,10 +18,14 @@ function App() {
     setLoading(true)
     if (edit?.id) {
       await axios.put(`${apiRoute}/todos/${edit.id}`, values);
+
+
       setLoading(false)
       setEdit(null);
     } else {
-      await axios.post(`${apiRoute}/todos`, values);
+      const res = await axios.post(`${apiRoute}/todos`, values);
+      console.log(res);
+      setData((prev) => [res.data.data,...prev]);
       setLoading(false)
     }
     resetForm();
