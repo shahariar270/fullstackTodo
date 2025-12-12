@@ -33,11 +33,13 @@ function App() {
   };
 
   const deleteHandle = async (id) => {
-    setLoading(true)
-    await axios.delete(`${apiRoute}/todos/${id}`).finally(() => {
-      setLoading(false)
-    })
+    setLoading(true);
 
+    await axios.delete(`${apiRoute}/todos/${id}`);
+
+    setData(prev => prev.filter(item => item.id !== id));
+
+    setLoading(false);
   };
 
   useEffect(() => {
