@@ -17,15 +17,16 @@ function App() {
   const handleOnSubmit = async (values, { resetForm }) => {
     setLoading(true)
     if (edit?.id) {
-      await axios.put(`${apiRoute}/todos/${edit.id}`, values);
-
-
+      const res = await axios.put(`${apiRoute}/todos/${edit.id}`, values);
+      setData((prev) =>
+        prev.map((item) =>
+          item.id === edit?.id ? res.data.data : item
+        ))
       setLoading(false)
       setEdit(null);
     } else {
       const res = await axios.post(`${apiRoute}/todos`, values);
-      console.log(res);
-      setData((prev) => [res.data.data,...prev]);
+      setData((prev) => [res.data.data, ...prev]);
       setLoading(false)
     }
     resetForm();
