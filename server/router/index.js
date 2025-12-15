@@ -12,16 +12,21 @@ router.delete('/todos/:id', deleteTodos);
 router.put('/todos/:id', updateTodo)
 
 router.post('/todos/:id/clone', async (req, res) => {
-    const todoID = await Todos.findById(req.params.id).lean();
-    if (!todoID) {
-        return res.status(404).json({ message: "todo not found" });
+    try {
+        const todoID = await Todos.findById(req.params.id).lean();
+        if (!todoID) {
+            return res.status(404).json({ message: "todo not found" });
+        }
+
+        delete todoID._id;
+        todoID.title += " (copy)";
+
+        const newProduct = await Todos.create(todoID);
+        res.status(201).json(newProduct);
+
+    } catch (error) {
+        console.log(error);
     }
-
-    delete todoID._id;
-    todoID.title += " (copy)";
-
-    const newProduct = await Todos.create(todoID);
-    res.status(201).json(newProduct);
 })
 
 module.exports = router;
