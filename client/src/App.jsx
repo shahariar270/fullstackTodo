@@ -46,6 +46,10 @@ function App() {
     setLoading(false);
   };
 
+  const duplicateHandler = (id) => {
+
+  }
+
   useEffect(() => {
     loadData();
   }, []);
@@ -133,6 +137,12 @@ function App() {
                       onClick={() => deleteHandle(item.id)}
                     >
                       Delete
+                    </button>
+                    <button
+                      className="btn"
+                      onClick={() => duplicateHandler(item.id)}
+                    >
+                      Duplicate
                     </button>
                   </div>
                 </li>
