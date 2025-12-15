@@ -46,7 +46,12 @@ function App() {
     setLoading(false);
   };
 
-  const duplicateHandler = (id) => {
+  const duplicateHandler = async(id) => {
+    const res = await axios.post(`${apiRoute}/todos/${id}/clone`);
+    setData((prev) =>
+      prev.map((item) =>
+        item.id === edit?.id ? res.data.data : item
+      ))
 
   }
 
@@ -140,7 +145,7 @@ function App() {
                     </button>
                     <button
                       className="btn"
-                      onClick={() => duplicateHandler(item.id)}
+                      onClick={() => duplicateHandler(item._id)}
                     >
                       Duplicate
                     </button>
