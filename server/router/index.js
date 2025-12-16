@@ -1,5 +1,4 @@
 const express = require('express');
-const Todos = require('../Data/index')
 const { getTodos, createTodos, deleteTodos, updateTodo, cloneTodo } = require('../control');
 const router = express.Router();
 
