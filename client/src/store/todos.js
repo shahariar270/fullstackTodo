@@ -74,7 +74,19 @@ const todoSlice = createSlice({
             .addCase(createTodos.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
+            })
+            //update todo
+            .addCase(updateTodo.fulfilled, (state, action) => {
+                state.isLoading = false;
+                const index = state.todos.findIndex(
+                    (todo) => todo.id === action.payload.id
+                );
+
+                if (index !== -1) {
+                    state.todos[index] = action.payload;
+                }
             });
+
     },
 });
 
