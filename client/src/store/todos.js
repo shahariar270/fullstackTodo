@@ -16,12 +16,13 @@ export const fetchTodos = createAsyncThunk(
 
 export const createTodos = createAsyncThunk(
     'todo/createTodos',
-    async (formData, thunApi) => {
+    async (formData, thunkAPI) => {
         try {
-            const res = await axios.put(`${apiRoute}/todos/${edit.id}`, formData)
+            const res = await axios.post(`${apiRoute}/todos`, formData)
+            console.log(res);
             return res.data.data
         } catch (error) {
-            return thunApi.rejectWithValue(error.message)
+            return thunkAPI.rejectWithValue(error.message)
         }
     }
 )

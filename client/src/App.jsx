@@ -24,7 +24,7 @@ function App() {
         const res = await axios.put(`${apiRoute}/todos/${edit.id}`, values);
         setEdit(null);
       } else {
-        dispatch(createTodos())
+        dispatch(createTodos(values))
       }
     } catch (error) {
       console.log(error);
