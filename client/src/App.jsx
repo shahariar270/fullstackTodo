@@ -4,7 +4,7 @@ import { apiRoute, fetchApi, initialValuesData } from './Ultis/helper';
 import { Field, Form, Formik } from 'formik'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { createTodos, fetchTodos } from './store/todos';
+import { createTodos, fetchTodos, updateTodo } from './store/todos';
 
 function App() {
   const [edit, setEdit] = useState(null);
@@ -17,21 +17,16 @@ function App() {
 
   }, [])
 
-  const handleOnSubmit = async (values, { resetForm }) => {
+  const handleOnSubmit = (values, { resetForm }) => {
     setLoading(true)
-    try {
       if (edit?.id) {
-        const res = await axios.put(`${apiRoute}/todos/${edit.id}`, values);
+        dispatch(updateTodo(edit?.id, values))
         setEdit(null);
       } else {
         dispatch(createTodos(values))
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
       setLoading(false)
       resetForm();
-    }
   };
 
   const deleteHandle = async (id) => {
