@@ -4,7 +4,7 @@ import { apiRoute, fetchApi, initialValuesData } from './Ultis/helper';
 import { Field, Form, Formik } from 'formik'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTodos } from './store/todos';
+import { createTodos, fetchTodos } from './store/todos';
 
 function App() {
   const [edit, setEdit] = useState(null);
@@ -24,7 +24,7 @@ function App() {
         const res = await axios.put(`${apiRoute}/todos/${edit.id}`, values);
         setEdit(null);
       } else {
-        const res = await axios.post(`${apiRoute}/todos`, values);
+        dispatch(createTodos())
       }
     } catch (error) {
       console.log(error);

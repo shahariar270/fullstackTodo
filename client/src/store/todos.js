@@ -14,6 +14,18 @@ export const fetchTodos = createAsyncThunk(
     }
 );
 
+export const createTodos = createAsyncThunk(
+    'todo/createTodos',
+    async (formData, thunApi) => {
+        try {
+            const res = await axios.put(`${apiRoute}/todos/${edit.id}`, formData)
+            return res.data.data
+        } catch (error) {
+            return thunApi.rejectWithValue(error.message)
+        }
+    }
+)
+
 
 const todoSlice = createSlice({
     name: 'todo',
@@ -34,6 +46,19 @@ const todoSlice = createSlice({
                 state.todos = action.payload;
             })
             .addCase(fetchTodos.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            //create todos
+            .addCase(createTodos.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(createTodos.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.todos = [action.payload, ...state.todos];
+            })
+            .addCase(createTodos.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });
