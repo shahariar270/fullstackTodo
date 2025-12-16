@@ -19,12 +19,24 @@ export const createTodos = createAsyncThunk(
     async (formData, thunkAPI) => {
         try {
             const res = await axios.post(`${apiRoute}/todos`, formData)
-            console.log(res);
             return res.data.data
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message)
         }
     }
+)
+
+export const updateTodo = createAsyncThunk(
+    'todo/updateTodo',
+    async (id, data, thunkAPI) => {
+        try {
+            const res = await axios.put(`${apiRoute}/todos/${id}`, data)
+            return res.data.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+
 )
 
 
