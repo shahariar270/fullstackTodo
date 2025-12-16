@@ -3,20 +3,17 @@ import { useEffect } from 'react';
 import { apiRoute, fetchApi, initialValuesData } from './Ultis/helper';
 import { Field, Form, Formik } from 'formik'
 import axios from 'axios';
-import {useDispatch} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTodos } from './store/todos';
 
 function App() {
-  const [data, setData] = useState([]);
   const [edit, setEdit] = useState(null);
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch()
-
-  const loadData = async () => {
-    const res = await fetchApi('todos');
-    setData(res.data);
-  };
+  const { todos } = useSelector(state => state.todo)
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(fetchTodos())
 
   }, [])
 
@@ -25,14 +22,9 @@ function App() {
     try {
       if (edit?.id) {
         const res = await axios.put(`${apiRoute}/todos/${edit.id}`, values);
-        setData((prev) =>
-          prev.map((item) =>
-            item.id === edit?.id ? res.data.data : item
-          ))
         setEdit(null);
       } else {
         const res = await axios.post(`${apiRoute}/todos`, values);
-        setData((prev) => [res.data.data, ...prev]);
       }
     } catch (error) {
       console.log(error);
@@ -47,23 +39,12 @@ function App() {
 
     await axios.delete(`${apiRoute}/todos/${id}`);
 
-    setData(prev => prev.filter(item => item.id !== id));
-
     setLoading(false);
   };
 
   const duplicateHandler = async (id) => {
     const res = await axios.post(`${apiRoute}/todos/${id}/clone`);
-    setData((prev) =>
-      prev.map((item) =>
-        item.id === edit?.id ? res.data.data : item
-      ))
-
   }
-
-  useEffect(() => {
-    loadData();
-  }, []);
 
   return (
     <div className="todo-app">
@@ -91,9 +72,9 @@ function App() {
       <div className="card list-card">
         {loading ? <span>loading...</span> :
           <ul className="list">
-            {data?.length === 0 ? <span>you have no todo complete</span>
+            {todos?.length === 0 ? <span>you have no todo complete</span>
               :
-              (data.map((item) => (
+              (todos.map((item) => (
                 <li key={item.id} className="list-item">
                   <label className="left">
                     <input
@@ -136,7 +117,6 @@ function App() {
                           ...item,
                           targetDate: e.target.value,
                         });
-                        loadData();
                       }}
                     />
 

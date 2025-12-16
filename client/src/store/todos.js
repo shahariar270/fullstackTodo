@@ -7,8 +7,7 @@ export const fetchTodos = createAsyncThunk(
     async (_, thunkApi) => {
         try {
             const res = await axios.get(`${apiRoute}/todos`);
-            console.log(res);
-            return res.data;
+            return res.data.data;
         } catch (error) {
             return thunkApi.rejectWithValue(error.message);
         }
