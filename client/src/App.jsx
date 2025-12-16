@@ -3,16 +3,22 @@ import { useEffect } from 'react';
 import { apiRoute, fetchApi, initialValuesData } from './Ultis/helper';
 import { Field, Form, Formik } from 'formik'
 import axios from 'axios';
+import {useDispatch} from 'react-redux';
 
 function App() {
   const [data, setData] = useState([]);
   const [edit, setEdit] = useState(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch()
 
   const loadData = async () => {
     const res = await fetchApi('todos');
     setData(res.data);
   };
+
+  useEffect(() => {
+
+  }, [])
 
   const handleOnSubmit = async (values, { resetForm }) => {
     setLoading(true)
@@ -46,7 +52,7 @@ function App() {
     setLoading(false);
   };
 
-  const duplicateHandler = async(id) => {
+  const duplicateHandler = async (id) => {
     const res = await axios.post(`${apiRoute}/todos/${id}/clone`);
     setData((prev) =>
       prev.map((item) =>
