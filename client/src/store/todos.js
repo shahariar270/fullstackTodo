@@ -26,6 +26,18 @@ export const createTodos = createAsyncThunk(
     }
 )
 
+export const cloneTodos = createAsyncThunk(
+    'todo/cloneTodos',
+    async (id, thunkAPI) => {
+        try {
+            const res = await axios.post(`${apiRoute}/todos/${id}/clone`);
+            return res.data.data
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message)
+        }
+    }
+)
+
 export const updateTodo = createAsyncThunk(
     'todo/updateTodo',
     async ({ id, formData }, thunkAPI) => {
@@ -107,6 +119,11 @@ const todoSlice = createSlice({
                 const deletedId = action.payload;
 
                 state.todos = state.todos.filter(todo => todo.id !== deletedId);
+            })
+            //clone todo
+             .addCase(cloneTodos.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.todos = [action.payload, ...state.todos];
             })
     },
 });
