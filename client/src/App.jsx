@@ -89,9 +89,9 @@ function App() {
               (todos.map((item) => (
                 <li key={item.id} className="list-item">
                   <label className="left">
-                    <input
+                    {/* <input
                       type="checkbox"
-                      checked={item.isComplete}
+                      checked={item?.isComplete}
                       onChange={async (e) => {
                         const checked = e.target.checked;
 
@@ -110,8 +110,7 @@ function App() {
                           setLoading(false);
                         }
                       }}
-
-                    />
+                    /> */}
                     <span className={item.isComplete ? "done" : ""}>
                       {item.title}
                     </span>
