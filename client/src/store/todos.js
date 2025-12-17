@@ -42,7 +42,7 @@ export const updateTodo = createAsyncThunk(
 
 export const deleteTodo = createAsyncThunk(
     'todo/deleteTodo',
-    async (id , thunkAPI)=>{
+    async (id, thunkAPI) => {
         try {
             const res = await axios.delete(`${apiRoute}/todos/${id}`)
             return res.data.data;
@@ -102,7 +102,13 @@ const todoSlice = createSlice({
                 if (index !== -1) {
                     state.todos[index] = action.payload;
                 }
-            });
+            })
+            //delete todo
+            .addCase(deleteTodo.fulfilled, (state, action) => {
+                state.todos = state.todos.filter(todo => {
+                    todo.id !== action.payload.id
+                })
+            })
 
     },
 });
