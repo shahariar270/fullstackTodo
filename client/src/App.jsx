@@ -4,7 +4,7 @@ import { apiRoute, fetchApi, initialValuesData } from './Ultis/helper';
 import { Field, Form, Formik } from 'formik'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { createTodos, deleteTodo, fetchTodos, updateTodo } from './store/todos';
+import { cloneTodos, createTodos, deleteTodo, fetchTodos, updateTodo } from './store/todos';
 
 function App() {
   const [edit, setEdit] = useState(null);
@@ -53,7 +53,9 @@ function App() {
   };
 
   const duplicateHandler = async (id) => {
-    const res = await axios.post(`${apiRoute}/todos/${id}/clone`);
+    setLoading(true)
+    dispatch(cloneTodos(id));
+    setLoading(false)
   }
 
   return (
