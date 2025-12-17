@@ -40,6 +40,18 @@ export const updateTodo = createAsyncThunk(
     }
 )
 
+export const deleteTodo = createAsyncThunk(
+    'todo/deleteTodo',
+    async (id , thunkAPI)=>{
+        try {
+            const res = await axios.delete(`${apiRoute}/todos/${id}`)
+            return res.data.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
+
 
 const todoSlice = createSlice({
     name: 'todo',
