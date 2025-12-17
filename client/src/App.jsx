@@ -4,7 +4,7 @@ import { apiRoute, fetchApi, initialValuesData } from './Ultis/helper';
 import { Field, Form, Formik } from 'formik'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { createTodos, fetchTodos, updateTodo } from './store/todos';
+import { createTodos, deleteTodo, fetchTodos, updateTodo } from './store/todos';
 
 function App() {
   const [edit, setEdit] = useState(null);
@@ -49,9 +49,7 @@ function App() {
 
   const deleteHandle = async (id) => {
     setLoading(true);
-
-    await axios.delete(`${apiRoute}/todos/${id}`);
-
+    dispatch(deleteTodo(id))
     setLoading(false);
   };
 

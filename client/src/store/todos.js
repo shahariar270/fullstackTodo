@@ -44,13 +44,13 @@ export const deleteTodo = createAsyncThunk(
     'todo/deleteTodo',
     async (id, thunkAPI) => {
         try {
-            const res = await axios.delete(`${apiRoute}/todos/${id}`)
-            return res.data.data;
+            await axios.delete(`${apiRoute}/todos/${id}`);
+            return id;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
         }
     }
-)
+);
 
 
 const todoSlice = createSlice({
@@ -105,11 +105,10 @@ const todoSlice = createSlice({
             })
             //delete todo
             .addCase(deleteTodo.fulfilled, (state, action) => {
-                state.todos = state.todos.filter(todo => {
-                    todo.id !== action.payload.id
-                })
-            })
+                const deletedId = action.payload;
 
+                state.todos = state.todos.filter(todo => todo.id !== deletedId);
+            })
     },
 });
 
