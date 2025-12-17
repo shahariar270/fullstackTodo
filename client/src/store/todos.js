@@ -28,15 +28,16 @@ export const createTodos = createAsyncThunk(
 
 export const updateTodo = createAsyncThunk(
     'todo/updateTodo',
-    async (id, data, thunkAPI) => {
+    async ({ id, formData }, thunkAPI) => {
+        console.log(formData);
         try {
-            const res = await axios.put(`${apiRoute}/todos/${id}`, data)
+            const res = await axios.put(`${apiRoute}/todos/${id}`, formData)
+            console.log(res.data.data);
             return res.data.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
         }
     }
-
 )
 
 
@@ -76,6 +77,10 @@ const todoSlice = createSlice({
                 state.error = action.payload;
             })
             //update todo
+            .addCase(updateTodo.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
             .addCase(updateTodo.fulfilled, (state, action) => {
                 state.isLoading = false;
                 const index = state.todos.findIndex(

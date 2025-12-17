@@ -18,15 +18,33 @@ function App() {
   }, [])
 
   const handleOnSubmit = (values, { resetForm }) => {
-    setLoading(true)
-      if (edit?.id) {
-        dispatch(updateTodo(edit?.id, values))
-        setEdit(null);
-      } else {
-        dispatch(createTodos(values))
-      }
-      setLoading(false)
-      resetForm();
+    setLoading(true);
+
+    if (edit?.id) {
+      console.log(values);
+      dispatch(updateTodo({ id: edit?.id, formData: values }))
+        .then(() => {
+          setEdit(null);
+          resetForm();
+        })
+        .catch((error) => {
+          console.error("Error updating todo:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      dispatch(createTodos(values))
+        .then(() => {
+          resetForm();
+        })
+        .catch((error) => {
+          console.error("Error creating todo:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   };
 
   const deleteHandle = async (id) => {
