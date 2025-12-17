@@ -21,7 +21,6 @@ function App() {
     setLoading(true);
 
     if (edit?.id) {
-      console.log(values);
       dispatch(updateTodo({ id: edit?.id, formData: values }))
         .then(() => {
           setEdit(null);

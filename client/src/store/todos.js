@@ -29,7 +29,6 @@ export const createTodos = createAsyncThunk(
 export const updateTodo = createAsyncThunk(
     'todo/updateTodo',
     async ({ id, formData }, thunkAPI) => {
-        console.log(formData);
         try {
             const res = await axios.put(`${apiRoute}/todos/${id}`, formData)
             console.log(res.data.data);
