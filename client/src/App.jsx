@@ -89,17 +89,11 @@ function App() {
               (todos.map((item) => (
                 <li key={item.id} className="list-item">
                   <label className="left">
-                    {/* <input
+                    <input
                       type="checkbox"
                       checked={item?.isComplete}
                       onChange={async (e) => {
                         const checked = e.target.checked;
-
-                        setData(prev =>
-                          prev.map(todo =>
-                            todo.id === item.id ? { ...todo, isComplete: checked } : todo
-                          )
-                        );
 
                         try {
                           await axios.put(`${apiRoute}/todos/${item.id}`, {
@@ -110,7 +104,7 @@ function App() {
                           setLoading(false);
                         }
                       }}
-                    /> */}
+                    />
                     <span className={item.isComplete ? "done" : ""}>
                       {item.title}
                     </span>
