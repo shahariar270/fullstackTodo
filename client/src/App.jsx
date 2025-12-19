@@ -94,15 +94,13 @@ function App() {
                       checked={item?.isComplete}
                       onChange={async (e) => {
                         const checked = e.target.checked;
-
-                        try {
-                          await axios.put(`${apiRoute}/todos/${item.id}`, {
+                        dispatch(updateTodo({
+                          id: item?.id,
+                          formData: {
                             ...item,
-                            isComplete: checked,
-                          });
-                        } finally {
-                          setLoading(false);
-                        }
+                            isComplete: checked
+                          }
+                        }))
                       }}
                     />
                     <span className={item.isComplete ? "done" : ""}>
