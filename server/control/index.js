@@ -70,18 +70,25 @@ exports.updateTodo = async (req, res) => {
 
 exports.cloneTodo = async (req, res) => {
     try {
-        const todoID = await Todos.findById(req.params.id).lean();
-        if (!todoID) {
+        const todo = await Todos.findById(req.params.id).lean();
+
+        if (!todo) {
             return res.status(404).json({ message: "todo not found" });
         }
 
-        delete todoID._id;
-        todoID.title += " (copy)";
+        delete todo._id;
+        delete todo.id;
 
-        const newProduct = await Todos.create(todoID);
-        res.status(201).json(newProduct);
+        todo.title += " (copy)";
+
+        const newid = Date.now();
+
+        const newTodo = await Todos.create({ id: newid, ...todo });
+        res.status(201).json(newTodo);
 
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        res.status(500).json({ message: error.message });
     }
-}
+};
+
