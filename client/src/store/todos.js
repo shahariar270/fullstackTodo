@@ -31,7 +31,8 @@ export const cloneTodos = createAsyncThunk(
     async (id, thunkAPI) => {
         try {
             const res = await axios.post(`${apiRoute}/todos/${id}/clone`);
-            return res.data.data
+            console.log(res.data);
+            return res.data
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message)
         }
