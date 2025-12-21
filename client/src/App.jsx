@@ -5,6 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { cloneTodos, createTodos, deleteTodo, fetchTodos, updateTodo } from './store/todos';
+import TodoList from './HandleList';
 
 function App() {
   const [edit, setEdit] = useState(null);
@@ -80,6 +81,7 @@ function App() {
           </Form>
         </Formik>
       </div>
+      <TodoList setEdit={setEdit} />
 
       {/* <div className="card list-card">
         {loading ? <span>loading...</span> :
