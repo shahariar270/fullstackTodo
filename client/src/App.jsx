@@ -81,7 +81,7 @@ function App() {
         </Formik>
       </div>
 
-      <div className="card list-card">
+      {/* <div className="card list-card">
         {loading ? <span>loading...</span> :
           <ul className="list">
             {todos?.length === 0 ? <span>you have no todo complete</span>
@@ -145,7 +145,7 @@ function App() {
 
           </ul>
         }
-      </div>
+      </div> */}
     </div>
   );
 }
