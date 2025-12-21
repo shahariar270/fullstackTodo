@@ -1,16 +1,13 @@
 import { useState } from 'react'
 import { useEffect } from 'react';
-import { apiRoute, fetchApi, initialValuesData } from './Ultis/helper';
+import { initialValuesData } from './Ultis/helper';
 import { Field, Form, Formik } from 'formik'
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { cloneTodos, createTodos, deleteTodo, fetchTodos, updateTodo } from './store/todos';
+import { useDispatch } from 'react-redux';
+import { createTodos, fetchTodos, updateTodo } from './store/todos';
 import TodoList from './HandleList';
 
 function App() {
   const [edit, setEdit] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const { todos } = useSelector(state => state.todo)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,17 +44,6 @@ function App() {
     }
   };
 
-  const deleteHandle = async (id) => {
-    setLoading(true);
-    dispatch(deleteTodo(id))
-    setLoading(false);
-  };
-
-  const duplicateHandler = async (id) => {
-    setLoading(true)
-    dispatch(cloneTodos(id));
-    setLoading(false)
-  }
 
   return (
     <div className="todo-app">
@@ -81,73 +67,10 @@ function App() {
           </Form>
         </Formik>
       </div>
-      <TodoList setEdit={setEdit} />
 
-      {/* <div className="card list-card">
-        {loading ? <span>loading...</span> :
-          <ul className="list">
-            {todos?.length === 0 ? <span>you have no todo complete</span>
-              :
-              (todos.map((item) => (
-                <li key={item.id} className="list-item">
-                  <label className="left">
-                    <input
-                      type="checkbox"
-                      checked={item?.isComplete}
-                      onChange={async (e) => {
-                        const checked = e.target.checked;
-                        dispatch(updateTodo({
-                          id: item?.id,
-                          formData: {
-                            ...item,
-                            isComplete: checked
-                          }
-                        }))
-                      }}
-                    />
-                    <span className={item.isComplete ? "done" : ""}>
-                      {item.title}
-                    </span>
-                  </label>
-                  <div className="right">
-                    <input
-                      type="date"
-                      defaultValue={
-                        item.targetDate
-                          ? item.targetDate.slice(0, 10)
-                          : ""
-                      }
-                      onChange={async (e) => {
-                        await axios.put(`${apiRoute}/todos/${item.id}`, {
-                          ...item,
-                          targetDate: e.target.value,
-                        });
-                      }}
-                    />
-
-                    <button className="btn edit" onClick={() => setEdit(item)}>
-                      Edit
-                    </button>
-                    <button
-                      className="btn delete"
-                      onClick={() => deleteHandle(item.id)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="btn"
-                      onClick={() => duplicateHandler(item._id)}
-                    >
-                      Duplicate
-                    </button>
-                  </div>
-                </li>
-              )))
-            }
-
-          </ul>
-        }
-      </div> */}
+      <div className="card list-card">
+        <TodoList setEdit={setEdit} />
+      </div>
     </div>
   );
 }
