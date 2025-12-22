@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import './styles.scss'
 
-export const Tab = ({ tabs }) => {
+export const Tab = ({ tabs, active, onChange }) => {
   const [ activeTab, setActiveTab ] = useState(0);
-  console.log(activeTab);
 
   return (
     <div className='tab-wrapper'>

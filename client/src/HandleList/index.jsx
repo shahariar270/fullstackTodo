@@ -8,6 +8,7 @@ import { useEffect } from "react";
 const TodoList = ({ setEdit, loading }) => {
     const dispatch = useDispatch();
     const { todos } = useSelector((state) => state.todo);
+    const [activeTab, setActiveTab] = useState('all');
 
     useEffect(()=>{
         dispatch(fetchTodos())
@@ -18,10 +19,12 @@ const TodoList = ({ setEdit, loading }) => {
     return (
         <>
             <Tab
+                active={activeTab}
+                onChange={setActiveTab}
                 tabs={[
-                    { title: 'All', component: <div>All</div> },
-                    { title: 'Active', component: <div>Active</div> },
-                    { title: 'Completed', component: <div>Completed</div> },
+                    { title: 'All', key: 'all' },
+                    { title: 'Active', key: 'active' },
+                    { title: 'Completed', key: 'completed' },
                 ]}
             />
             {loading ? <div>Loading...</div> :
