@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { apiRoute } from "../Ultis/helper";
 import { deleteTodo, updateTodo, cloneTodos, fetchTodos } from "../store/todos";
 import { Tab } from "../component/Tab";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const TodoList = ({ setEdit, loading }) => {
     const dispatch = useDispatch();
@@ -15,6 +15,13 @@ const TodoList = ({ setEdit, loading }) => {
     },[])
 
     if (!todos) return null;
+
+    const filteredTodos = todos.filter(todo => {
+        if (activeTab === "active") return !todo.isComplete;
+        if (activeTab === "completed") return todo.isComplete;
+        return true;
+    });
+    console.log(activeTab);
 
     return (
         <>
@@ -30,10 +37,10 @@ const TodoList = ({ setEdit, loading }) => {
             {loading ? <div>Loading...</div> :
                 (
                     <ul className="list">
-                        {todos.length === 0 ? (
+                        {filteredTodos.length === 0 ? (
                             <span>you have no todo complete</span>
                         ) : (
-                            todos.map((item) => (
+                            filteredTodos.map((item) => (
                                 <li key={item.id} className="list-item">
                                     <label className="left">
                                         <input
