@@ -1,12 +1,17 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { apiRoute } from "../Ultis/helper";
-import { deleteTodo, updateTodo, cloneTodos } from "../store/todos";
+import { deleteTodo, updateTodo, cloneTodos, fetchTodos } from "../store/todos";
 import { Tab } from "../component/Tab";
+import { useEffect } from "react";
 
 const TodoList = ({ setEdit, loading }) => {
     const dispatch = useDispatch();
     const { todos } = useSelector((state) => state.todo);
+
+    useEffect(()=>{
+        dispatch(fetchTodos())
+    },[])
 
     if (!todos) return null;
 
