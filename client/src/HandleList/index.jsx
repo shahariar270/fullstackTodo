@@ -21,7 +21,6 @@ const TodoList = ({ setEdit, loading }) => {
         if (activeTab === "completed") return todo.isComplete;
         return true;
     });
-    console.log(activeTab);
 
     return (
         <>
