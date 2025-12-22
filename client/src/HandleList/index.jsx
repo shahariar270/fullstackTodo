@@ -2,6 +2,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { apiRoute } from "../Ultis/helper";
 import { deleteTodo, updateTodo, cloneTodos } from "../store/todos";
+import { Tab } from "../component/Tab";
 
 const TodoList = ({ setEdit }) => {
     const dispatch = useDispatch();
@@ -11,6 +12,16 @@ const TodoList = ({ setEdit }) => {
 
     return (
         <>
+        <Tab 
+            tabs={[
+                {title:'All', component: <div>All</div>},
+                {title:'Active', component: <div>Active</div>},
+                {title:'Completed', component: <div>Completed</div>},
+            ]} 
+        />
+
+
+
             <ul className="list">
                 {todos.length === 0 ? (
                     <span>you have no todo complete</span>
