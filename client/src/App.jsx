@@ -9,6 +9,7 @@ import TodoList from './HandleList';
 function App() {
   const [edit, setEdit] = useState(null);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(fetchTodos())
@@ -69,7 +70,7 @@ function App() {
       </div>
 
       <div className="card list-card">
-        <TodoList setEdit={setEdit} />
+        <TodoList setEdit={setEdit} loading={loading} />
       </div>
     </div>
   );
