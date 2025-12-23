@@ -70,7 +70,7 @@ exports.updateTodo = async (req, res) => {
 
 exports.cloneTodo = async (req, res) => {
     try {
-        const todo = await Todos.findById(req.params.id).lean();
+        const todo = await Todos.findById({id: req.params.id}).lean();
 
         if (!todo) {
             return res.status(404).json({ message: "todo not found" });
