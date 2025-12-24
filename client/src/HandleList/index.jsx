@@ -10,9 +10,9 @@ const TodoList = ({ setEdit, loading }) => {
     const { todos } = useSelector((state) => state.todo);
     const [activeTab, setActiveTab] = useState('all');
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(fetchTodos())
-    },[])
+    }, [])
 
     if (!todos) return null;
 

@@ -122,7 +122,7 @@ const todoSlice = createSlice({
                 state.todos = state.todos.filter(todo => todo.id !== deletedId);
             })
             //clone todo
-             .addCase(cloneTodos.fulfilled, (state, action) => {
+            .addCase(cloneTodos.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.todos = [action.payload, ...state.todos];
             })
