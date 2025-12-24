@@ -70,19 +70,17 @@ exports.updateTodo = async (req, res) => {
 
 exports.cloneTodo = async (req, res) => {
     try {
-        const todo = await Todos.findById({id: req.params.id}).lean();
+        const clonedId = req.params.id;
+        const todo = await Todos.findOne({ id: clonedId }).lean();
 
         if (!todo) {
             return res.status(404).json({ message: "todo not found" });
         }
 
         delete todo._id;
-        delete todo.id;
-
         todo.title += " (copy)";
 
-        const newid = Date.now();
-
+        const newid = Date.now().toString();
         const newTodo = await Todos.create({ id: newid, ...todo });
         res.status(201).json(newTodo);
 
