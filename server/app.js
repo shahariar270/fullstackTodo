@@ -11,8 +11,16 @@ app.use(express.json())
 const port = process.env.PORT || 3000;
 
 mongoose.connect(process.env.DB_URL)
-    .then(() => console.log('database connect successfully'))
-    .catch((err) => console.log(err))
+    .then(() => {
+        console.log('Database connected successfully');
+        app.listen(port, () => {
+            console.log('Server is running on', port);
+        });
+    })
+    .catch((err) => {
+        console.error('MongoDB connection failed:', err);
+    });
+
 
 app.use('/api', router)
 
@@ -22,6 +30,3 @@ app.get('/', (req, res) => {
     })
 })
 
-app.listen(port, () => {
-    console.log('server is ruing', port);
-})
