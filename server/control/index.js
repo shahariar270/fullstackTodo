@@ -78,10 +78,14 @@ exports.cloneTodo = async (req, res) => {
         }
 
         delete todo._id;
-        todo.title += " (copy)";
+        delete todo.id;
 
-        const newid = Date.now().toString();
-        const newTodo = await Todos.create({ id: newid, ...todo });
+        const newid = Date.now();
+        const newTodo = await Todos.create({
+            id: newid,
+            title: todo.title + ' (Copy)',
+            ...todo
+        });
         res.status(201).json(newTodo);
 
     } catch (error) {
