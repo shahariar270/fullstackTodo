@@ -9,10 +9,17 @@ const TodoList = ({ setEdit, loading }) => {
     const dispatch = useDispatch();
     const { todos } = useSelector((state) => state.todo);
     const [activeTab, setActiveTab] = useState('all');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 1;
 
     useEffect(() => {
         dispatch(fetchTodos())
     }, [])
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [activeTab]);
+
 
     if (!todos) return null;
 
@@ -21,6 +28,17 @@ const TodoList = ({ setEdit, loading }) => {
         if (activeTab === "completed") return todo.isComplete;
         return true;
     });
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+    const currentTodos = filteredTodos.slice(
+        indexOfFirstItem,
+        indexOfLastItem
+    );
+
+    const totalPages = Math.ceil(filteredTodos.length / itemsPerPage);
+
 
     return (
         <>
@@ -39,7 +57,7 @@ const TodoList = ({ setEdit, loading }) => {
                         {filteredTodos.length === 0 ? (
                             <span>you have no todo complete</span>
                         ) : (
-                            filteredTodos.map((item) => (
+                            currentTodos.map((item) => (
                                 <li key={item.id} className="list-item">
                                     <label className="left">
                                         <input
@@ -104,6 +122,34 @@ const TodoList = ({ setEdit, loading }) => {
                         )}
                     </ul>
                 )}
+            {totalPages > 1 && (
+                <div className="pagination">
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(prev => prev - 1)}
+                    >
+                        Prev
+                    </button>
+
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index}
+                            className={currentPage === index + 1 ? "active" : ""}
+                            onClick={() => setCurrentPage(index + 1)}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                    >
+                        Next
+                    </button>
+                </div>
+            )}
+
         </>
     );
 };
