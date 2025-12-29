@@ -2,7 +2,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
 import todoReducer from './todos'
-import notificationReducer from './Notifications'
+import { notificationsReducer } from './Notifications'
 
 const logger = createLogger({
     collapsed: true,
@@ -12,7 +12,7 @@ const logger = createLogger({
 export const store = configureStore({
     reducer: {
         todo: todoReducer,
-        notification: notificationReducer,
+        notification: notificationsReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(logger),

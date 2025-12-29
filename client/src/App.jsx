@@ -5,7 +5,6 @@ import { Field, Form, Formik } from 'formik'
 import { useDispatch } from 'react-redux';
 import { createTodos, fetchTodos, updateTodo } from './store/todos';
 import TodoList from './HandleList';
-import { showNotification } from './store/Notifications';
 
 function App() {
   const [edit, setEdit] = useState(null);
@@ -35,12 +34,13 @@ function App() {
     } else {
       dispatch(createTodos(values))
         .then(({ payload }) => {
-          dispatch(showNotification({
-            id: Date.now(),
-            type: "success",
-            message: payload.message || "Todo created successfully",
-            duration: 3000,
-          }))
+          dispatch({
+            type: "SHOW_NOTIFICATION",
+            payload: {
+              message: "Redux notification works!",
+              type: "success",
+            },
+          })
           resetForm();
         })
         .catch((error) => {
