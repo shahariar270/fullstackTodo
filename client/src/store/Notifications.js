@@ -4,6 +4,7 @@ const initialState = {
     visible: false,
     message: "",
     type: "info",
+    duration: 2000
 };
 
 const notificationsSlice = createSlice({
@@ -14,6 +15,7 @@ const notificationsSlice = createSlice({
             state.visible = true;
             state.message = action.payload.message;
             state.type = action.payload.type || "info";
+            state.type = action.payload.duration || 1000
         },
         hideNotification: (state, action) => {
             state.visible = false;
