@@ -39,7 +39,6 @@ const TodoList = ({ setEdit, loading }) => {
 
     const totalPages = Math.ceil(filteredTodos.length / itemsPerPage);
 
-
     return (
         <>
             <Tab
