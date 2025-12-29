@@ -4,35 +4,11 @@ import { removeNotification } from "../../store/Notifications";
 
 const Notifications = () => {
     const dispatch = useDispatch();
-    const notifications = useSelector(
-        (state) => state.notification.items
-    );
-
-    useEffect(() => {
-        notifications.forEach((n) => {
-            if (!n.timeoutId) {
-                const timeout = setTimeout(() => {
-                    dispatch(removeNotification(n.id));
-                }, n.duration || 3000);
-
-                n.timeoutId = timeout;
-            }
-        });
-    }, [notifications, dispatch]);
 
     return (
-        <div style={styles.wrapper}>
-            {notifications.map((n) => (
-                <div
-                    key={n.id}
-                    style={{
-                        ...styles.toast,
-                        ...styles[n.type],
-                    }}
-                >
-                    {n.message}
-                </div>
-            ))}
+        <div>
+            test data
+            
         </div>
     );
 };

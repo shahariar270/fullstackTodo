@@ -10,7 +10,7 @@ const TodoList = ({ setEdit, loading }) => {
     const { todos } = useSelector((state) => state.todo);
     const [activeTab, setActiveTab] = useState('all');
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 1;
+    const itemsPerPage = 10;
 
     useEffect(() => {
         dispatch(fetchTodos())
