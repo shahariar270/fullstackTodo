@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useEffect } from 'react';
 import { initialValuesData } from './Ultis/helper';
 import { Field, Form, Formik } from 'formik'
@@ -11,6 +11,8 @@ function App() {
   const [edit, setEdit] = useState(null);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+
+  const initialValues = useMemo(() => initialValuesData(edit), [edit]);
 
   useEffect(() => {
     dispatch(fetchTodos()).then(() => {
@@ -70,7 +72,7 @@ function App() {
       <div className="card form-card">
         <Formik
           enableReinitialize
-          initialValues={initialValuesData(edit)}
+          initialValues={initialValues}
           onSubmit={handleOnSubmit}
         >
           <Form className="form">
