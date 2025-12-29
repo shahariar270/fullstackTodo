@@ -13,7 +13,13 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchTodos())
+    dispatch(fetchTodos()).then(() => {
+      dispatch(showNotification({
+        message: "Fetch Todo Successfully",
+        type: "success",
+        duration: 2000
+      }))
+    })
 
   }, [])
 
@@ -25,6 +31,11 @@ function App() {
         .then(() => {
           setEdit(null);
           resetForm();
+          dispatch(showNotification({
+            message: "Update Todo Successfully",
+            type: "success",
+            duration: 2000
+          }))
         })
         .catch((error) => {
           console.error("Error updating todo:", error);
@@ -38,7 +49,7 @@ function App() {
           dispatch(showNotification({
             message: "Create Todo Successfully",
             type: "success",
-            duration: 150000
+            duration: 2000
           }))
           resetForm();
         })
