@@ -1,0 +1,21 @@
+.notification {
+    display: flex;
+    background: green;
+    width: fit-content;
+    border-radius: 4px;
+    padding: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    gap: 8px;
+    padding: 8px;
+
+    button {
+        padding: 0;
+        background: transparent;
+        border: none;
+    }
+    p{
+        margin: 0;
+    }
+}

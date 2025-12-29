@@ -38,6 +38,7 @@ function App() {
           dispatch(showNotification({
             message: "Create Todo Successfully",
             type: "success",
+            duration: 150000
           }))
           resetForm();
         })
