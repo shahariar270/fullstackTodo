@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { hideNotification } from "../../store/Notifications";
 import { useEffect } from "react";
+import './styles.scss'
 
 const Notifications = () => {
     const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const Notifications = () => {
     if (!visible) return null;
 
     return (
-        <div className={`notification notification-${type}`}>
+        <div className={`notification notification--${type}`}>
             <p>{message}</p>
 
             <button onClick={() => dispatch(hideNotification())}>
