@@ -123,7 +123,7 @@ const TodoList = ({ setEdit, loading }) => {
                                                 dispatch(cloneTodos(item.id)).then(()=>{
                                                     dispatch(showNotification({
                                                         type:'info',
-                                                        message: 'Todo Delete successfully',
+                                                        message: 'Todo clone successfully',
                                                         duration: 6000
                                                     }))
                                                 })
