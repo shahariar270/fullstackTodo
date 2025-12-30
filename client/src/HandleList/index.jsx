@@ -4,6 +4,7 @@ import { apiRoute } from "../Ultis/helper";
 import { deleteTodo, updateTodo, cloneTodos, fetchTodos } from "../store/todos";
 import { Tab } from "../component/Tab";
 import { useEffect, useState } from "react";
+import { showNotification } from "../store/Notifications";
 
 const TodoList = ({ setEdit, loading }) => {
     const dispatch = useDispatch();
@@ -104,7 +105,14 @@ const TodoList = ({ setEdit, loading }) => {
 
                                         <button
                                             className="btn delete"
-                                            onClick={() => dispatch(deleteTodo(item.id))}
+                                            onClick={() => {
+                                                dispatch(deleteTodo(item.id)).then(()=>{
+                                                    dispatch(showNotification({
+                                                        type:'info',
+                                                        message: 'Todo Delete successfully'
+                                                    }))
+                                                })
+                                            }}
                                         >
                                             Delete
                                         </button>
