@@ -98,7 +98,13 @@ const TodoList = ({ setEdit, loading }) => {
                                                 axios.put(`${apiRoute}/todos/${item.id}`, {
                                                     ...item,
                                                     targetDate: e.target.value,
-                                                });
+                                                }).then(() => {
+                                                    dispatch(showNotification({
+                                                        type: 'info',
+                                                        message: 'Update date successfully',
+                                                        duration: 6000
+                                                    }))
+                                                })
                                             }}
                                         />
 
