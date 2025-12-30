@@ -1,18 +1,24 @@
 .notification {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    opacity: 0;
     display: flex;
     width: fit-content;
     border-radius: 4px;
-    padding: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    gap: 8px;
     padding: 8px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+
+    animation: slideDown 0.4s ease-out forwards;
 
     button {
         padding: 0;
         background: transparent;
         border: none;
+        cursor: pointer;
     }
     p {
         margin: 0;
@@ -20,13 +26,33 @@
     &--success {
         background: green;
         color: white;
+        button {
+            color: white;
+        }
     }
     &--error {
         background: red;
         color: black;
+        button {
+            color: black;
+        }
     }
     &--info {
         background: rgb(97, 97, 245);
         color: white;
+        button {
+            color: white;
+        }
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateX(-50%) translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
     }
 }
