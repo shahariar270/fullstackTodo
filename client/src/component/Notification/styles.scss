@@ -1,6 +1,5 @@
 .notification {
     display: flex;
-    background: green;
     width: fit-content;
     border-radius: 4px;
     padding: 4px;
@@ -15,7 +14,19 @@
         background: transparent;
         border: none;
     }
-    p{
+    p {
         margin: 0;
+    }
+    &--success {
+        background: green;
+        color: white;
+    }
+    &--error {
+        background: red;
+        color: black;
+    }
+    &--info {
+        background: rgb(97, 97, 245);
+        color: white;
     }
 }
