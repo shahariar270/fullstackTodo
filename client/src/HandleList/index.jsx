@@ -72,7 +72,13 @@ const TodoList = ({ setEdit, loading }) => {
                                                             isComplete: e.target.checked,
                                                         },
                                                     })
-                                                );
+                                                ).then(() => {
+                                                    dispatch(showNotification({
+                                                        type: 'info',
+                                                        message: 'Todo complete successfully',
+                                                        duration: 6000
+                                                    }))
+                                                })
                                             }}
                                         />
                                         <span className={item.isComplete ? "done" : ""}>
@@ -106,9 +112,9 @@ const TodoList = ({ setEdit, loading }) => {
                                         <button
                                             className="btn delete"
                                             onClick={() => {
-                                                dispatch(deleteTodo(item.id)).then(()=>{
+                                                dispatch(deleteTodo(item.id)).then(() => {
                                                     dispatch(showNotification({
-                                                        type:'info',
+                                                        type: 'info',
                                                         message: 'Todo Delete successfully'
                                                     }))
                                                 })
@@ -120,9 +126,9 @@ const TodoList = ({ setEdit, loading }) => {
                                         <button
                                             className="btn"
                                             onClick={() => {
-                                                dispatch(cloneTodos(item.id)).then(()=>{
+                                                dispatch(cloneTodos(item.id)).then(() => {
                                                     dispatch(showNotification({
-                                                        type:'info',
+                                                        type: 'info',
                                                         message: 'Todo clone successfully',
                                                         duration: 6000
                                                     }))
