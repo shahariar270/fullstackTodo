@@ -119,7 +119,15 @@ const TodoList = ({ setEdit, loading }) => {
 
                                         <button
                                             className="btn"
-                                            onClick={() => dispatch(cloneTodos(item.id))}
+                                            onClick={() => {
+                                                dispatch(cloneTodos(item.id)).then(()=>{
+                                                    dispatch(showNotification({
+                                                        type:'info',
+                                                        message: 'Todo Delete successfully',
+                                                        duration: 6000
+                                                    }))
+                                                })
+                                            }}
                                         >
                                             Duplicate
                                         </button>
