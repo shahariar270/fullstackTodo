@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const apiRoute = import.meta.env.API_URL ?? 'http://localhost:3000/api';
+export const apiRoute = 'https://fullstacktodo-v3bz.onrender.com/api';
+
 
 export const fetchApi = async (url) => {
     try {
