@@ -13,7 +13,7 @@
   "license": "ISC",
   "type": "commonjs",
   "engines": {
-    "node": "18.11.1"
+    "node": "25.2.1"
   },
   "dependencies": {
     "body-parser": "^2.2.0",
